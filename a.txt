@@ -1,0 +1,627 @@
+aDESIGN THINKING METHODOLOGY 
+
+Documentary & Implementation Framework 
+
+Automated Data Sensitivity Classification Engine 
+
+Data Governance & Privacy | Machine Learning | NLP 
+
+Team #01: Akshay Chodhary, Aditi J., Shikha B. 
+
+Priority: HIGH 
+
+April 2026 
+
+ 
+
+Table of Contents 
+
+1. Executive Summary 
+
+2. Design Thinking Framework Overview 
+
+3. Phase 1: Empathy Mapping 
+
+   3.1 Client Empathy Map 
+
+   3.2 User Persona Development 
+
+4. Phase 2: Problem Definition & Gap Analysis 
+
+   4.1 Current State Analysis 
+
+   4.2 Desired Future State 
+
+   4.3 Gap Analysis & MECE Framework 
+
+5. Phase 3: Ideation & Solution Development 
+
+6. Phase 4: Prototyping & Data Requirements 
+
+7. Data Strategy & Statistical Validation 
+
+8. Industry Context & Vertical Insights 
+
+9. Financial Services Payment Architecture 
+
+10. Program Vision & Strategic Roadmap 
+
+11. Constraints & Risk Mitigation 
+
+12. Implementation & Next Steps 
+
+ 
+
+1. Executive Summary 
+
+This document presents a comprehensive Design Thinking methodology applied to the Automated Data Sensitivity Classification Engine project. The initiative addresses a critical organizational need to classify large volumes of unstructured and semi-structured data by sensitivity level, ensuring regulatory compliance and enabling effective data governance across payment processing clients including Discover, Visa, and American Express. 
+
+Business Critical Challenge: Organizations lack scalable mechanisms to automatically classify sensitive content, resulting in accidental exposure of Restricted/Confidential data, regulatory fines (GDPR up to 4% of global revenue), and vendor prerequisite failures with payments clients. 
+
+Expected Outcome: A production-grade ensemble classification system achieving ≥95% precision on Restricted data with explainability, supporting on-premises deployment, and enabling downstream DLP/governance policy enforcement. 
+
+ 
+
+3. Phase 1: Empathy Mapping 
+
+Empathy mapping helps turn feedback from people into a clear and easy‑to‑understand picture of what different stakeholders think and need.  
+
+3.1 Client Empathy Map: Data Governance/Privacy Engineering 
+
+Primary Stakeholder: Data Governance & Privacy Engineering Leadership 
+
+ 
+
+Empathy Dimension 
+
+Client's Perspective & Needs 
+
+SAYS 
+
+We need an automated solution that scales. 
+
+Black-box models are unacceptable. 
+
+PII cannot be stored post-classification. 
+
+Risk of sensitive data being exposed. 
+
+THINKS 
+
+If we misclassify critical data, it can lead to serious compliance issues. 
+
+How can we standardize classification across departments. 
+
+We have data protection policies, but enforcement is inconsistent. 
+
+We need explainability- I must justify every decision to regulators. 
+
+DOES 
+
+Keeps track of data protection laws and regulations. 
+
+Conducts annual vendor audits. 
+
+Manages policy enforcement workflows.  
+
+Oversees vendor prerequisites for payments partners. 
+
+FEELS 
+
+Uncertain about the hidden risks in unstructured data. 
+
+Frustrated with lack of centralized control. 
+
+Stressed about strict regulatory audits and compliance checks. 
+
+Frustrated with slow, manual classification processes 
+
+ 
+
+ 
+
+ 
+
+4. Phase 2: Problem Definition & Gap Analysis 
+
+4.1 Current State Analysis 
+
+Operational Reality: 
+
+Manual Classification: Data classification conducted entirely by human reviewers across multiple departments 
+
+Scale Limitations: Cannot process high volumes of unstructured data (customer support tickets, financial records, HR files) 
+
+Consistency Issues: Different reviewers apply inconsistent judgment; no standardized taxonomy 
+
+Compliance Failures: Accidental exposure of Restricted/Confidential data; audit failures 
+
+No Enforcement Mechanism: Data may be classified, but nothing enforces the rules, so sensitive data is still exposed. 
+
+ 
+
+4.2 Desired Future State 
+
+Vision: 
+
+Automated Classification: Documents automatically classified into Public | Internal | Confidential | Restricted 
+
+Scalability: Process any volume of unstructured/semi-structured text; batch and real-time streaming 
+
+Explainability: Each prediction includes ≥3 evidence tokens showing which phrases drove classification 
+
+Auditability: Timestamped classification logs; dual-approval labeling; human-in-loop for edge cases 
+
+Policy Enforcement: The system tells security tools what data is sensitive so they can take action. 
+
+Regulatory Compliance: Satisfy PCI DSS, GDPR, CCPA vendor prerequisites for payments clients 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4.3 Gap Analysis & MECE Framework 
+
+Using MECE (Mutually Exclusive, Collectively Exhaustive) decomposition, we identify critical gaps between current and future states: 
+
+Gap Category 
+
+Current State 
+
+Desired Future State 
+
+Classification Speed 
+
+Manual review: 5-10 mins per document. Not scalable. 
+
+Automated: <200ms per document Real-time streaming. 
+
+Accuracy & Recall 
+
+Inconsistent accuracy. Unknown recall. Frequent misclassifications. 
+
+≥95% precision (Confidential), ≥95% (Restricted). ≥97% recall (Restricted). F1-Macro ≥0.88. 
+
+Explainability 
+
+Subjective human judgment. No reasoning is provided. 
+
+100% of predictions include ≥3 evidence tokens (LIME/SHAP).  
+
+Policy Enforcement 
+
+Manual enforcement. No integration with DLP/CASB. 
+
+We share alerts with security systems, so they know whether to allow, protect, limit, or stop the data. 
+
+Compliance Trail 
+
+Informal notes. No audit log. Difficult to demonstrate controls. 
+
+Timestamped audit logs. Dual approval labeling.  
+
+Model Robustness & Drift 
+
+No monitoring of model performance over time. No drift detection or retraining strategy. 
+
+Drift detection. 
+
+Continuous performance monitoring. 
+
+ 
+
+ 
+
+5. Phase 3: Ideation & Solution Development 
+
+Design thinking ideation encourages divergent thinking to explore multiple solution pathways, then convergent thinking to evaluate and select the most viable. 
+
+5.1 Solution Overview: Ensemble Classification Architecture 
+
+The proposed solution employs an ensemble machine learning approach combining rule-based pattern matching with deep learning transformers, ensuring both precision and explainability. 
+
+Core Components 
+
+Ingestion Layer: Kafka/S3/REST API connectors. Apache Tika, pdfplumber, python-docx for multi-format parsing. 
+
+Pre-Processing: Text cleaning, PII masking (Presidio library), tokenization, language detection with language-specific routing. 
+
+Feature Engineering: TF-IDF+n-gram baselines. Contextual embeddings via fine-tuned BERT/RoBERTa/DeBERTa on domain corpus. 
+
+Classification Models: Ensemble: Logistic Regression (baseline), XGBoost, Fine-tuned transformer. Voting/stacking layer for final label. 
+
+Explainability Layer: SHAP for tree models, LIME/Integrated Gradients for transformers. Evidence tokens surfaced per prediction. 
+
+Policy Engine: Rule overlay: if Restricted token detected override to Restricted regardless of model score. Configurable threshold table. 
+
+Output/API: REST API (FastAPI). Response: label + score + evidence + action. Webhook for downstream DLP/CASB/data catalog. 
+
+MLOps: MLflow for experiment tracking. Model registry with champion/challenger. Drift monitoring via Evidently AI. Monthly retraining trigger. 
+
+ 
+
+6. Phase 4: Input/Output Overview 
+
+6.1 Expected Input/Output Specification 
+
+Input Type 
+
+Description 
+
+Example 
+
+Raw Text Documents 
+
+Customer support tickets, HR records, financial reports, contracts, emails 
+
+PDF, DOCX, TXT, CSV 
+
+Metadata Signals 
+
+Source system, file type, author, department, creation date 
+
+source='CRM', author='john@example.com', dept='Finance' 
+
+Taxonomy Reference 
+
+Sensitivity level definitions: Public/Internal/Confidential/Restricted 
+
+Restricted: Contains SSN, CC, API key, password 
+
+Labeled Training Data 
+
+Minimum 5,000 annotated samples per class (balanced) 
+
+20K Public, 20K Internal, 20K Confidential, 20K Restricted 
+
+Regex/Rule Seeds 
+
+Known PII patterns: SSN, PAN, IBAN, DOB, email, phone 
+
+pattern='\d{3}-\d{2}-\d{4}' (SSN) 
+
+ 
+
+Output Specification 
+
+Output Type 
+
+Description 
+
+Example 
+
+Sensitivity Label 
+
+One of: Public | Internal | Confidential | Restricted 
+
+label='Restricted' 
+
+Confidence Score 
+
+Probability score [0-1] per class from softmax output 
+
+score=0.98 
+
+Evidence Tokens 
+
+Top-k tokens/phrases driving classification (LIME/SHAP) 
+
+['SSN:', 'credit card', 'API key'] 
+
+Policy Action 
+
+Recommended action: Allow/Encrypt/Restrict/Quarantine 
+
+action='Quarantine' 
+
+Audit Log Entry 
+
+Timestamped classification record for compliance trail 
+
+2026-04-09T14:32:11Z | doc_id | Restricted 
+
+ 
+
+7. Data Strategy  
+
+7.1 Data Collection  
+
+Source Category 
+
+Document Types 
+
+Target Volume 
+
+Customer Support (CRM) 
+
+Support tickets, customer interactions, complaint logs 
+
+25,000 documents 
+
+HR Records (HRIS) 
+
+Evaluations, onboarding, benefits, salary discussions 
+
+20,000 documents 
+
+Financial Docs 
+
+Invoices, receipts, expense reports, payment confirmations 
+
+20,000 documents 
+
+Contracts & Legal 
+
+NDAs, vendor agreements, payment terms, licenses 
+
+15,000 documents 
+
+ 
+
+ 
+
+8. Industry Context & Vertical Insights 
+
+8.1 Payments Industry Vertical 
+
+Our key clients—Discover, Visa, American Express—operate under strict PCI DSS (Payment Card Industry Data Security Standard), GDPR, and CCPA regulations. These frameworks mandate that vendors demonstrate documented data classification and protection controls. 
+
+PCI DSS Compliance Requirements 
+
+Requirement 3.1: Render PII unreadable anywhere it is stored—masking, encryption mandatory 
+
+Requirement 3.4: Render all card data unreadable during storage 
+
+Requirement 8.2: Use strong authentication; maintain audit trails for data access 
+
+Requirement 10: Implement logging and monitoring; maintain audit logs of access to cardholder data 
+
+GDPR & CCPA Implications 
+
+Data Inventory: Organizations must maintain records of processing activities. Automated classification enables data inventory at scale. 
+
+Data Minimization: Classification informs which data can be deleted or depersonalized, reducing regulatory surface. 
+
+Right to Access: When individuals request their data, classification identifies which records require response. 
+
+Fines & Liability: GDPR fines up to 4% of global revenue for data breaches. Documented classification demonstrates due diligence. 
+
+8.2 Competitive Landscape 
+
+Existing Solutions: Competitors (Microsoft Purview, Symantec DLP, Google Cloud DLP) offer classification, but often as black-box models or require third-party annotations. 
+
+Our Differentiation: Transparency via explainability, on-premise deployment, domain-specific training on payment/financial data, compliance-focused design. 
+
+Market Opportunity: $3.2B+ data governance market; 87% of organizations report data classification as critical need (Forrester 2024). 
+
+ 
+
+9. Financial Services Payment Architecture 
+
+9.1 Integration with Payment Processing Pipeline 
+
+The classification engine integrates into payment and financial processing workflows at critical junctures, ensuring sensitive transaction data is protected throughout its lifecycle. 
+
+Ingestion Points 
+
+Customer Support Tickets: Classify immediately on ticket creation; flag Restricted for redaction before agent view 
+
+Financial Documents: Classify invoices, receipts, bank statements on upload; enforce encryption if Restricted 
+
+Merchant Agreements: Classify contracts; identify Restricted payment terms; audit access 
+
+Payment Risk Assessments: Classify risk evaluation reports; ensure only authorized personnel access 
+
+Enforcement Actions 
+
+Public: Allow sharing in marketing, public docs 
+
+Internal: Share within organization; log access 
+
+Confidential: Encrypt at rest/transit; restrict to named roles; MFA required 
+
+Restricted: Quarantine; no export; dual-approval for access; continuous audit; mTLS required for payments clients 
+
+9.2 mTLS Integration for Payments Clients 
+
+Payment processing requires mutual TLS authentication. Our classification API supports mTLS natively, enabling secure credential-based access for Discover, Visa, and Amex integration. 
+
+Certificate Management: Client certificates issued per vendor; rotated annually; revocation managed via CRL 
+
+Authentication: API validates client cert before accepting classification request 
+
+Audit Trail: All mTLS connections logged with certificate issuer, timestamp, vendor identifier 
+
+ 
+
+10. Program Vision & Strategic Roadmap 
+
+10.1 Multi-Year Vision 
+
+3-Year Horizon: Transform from manual, inconsistent data classification to an enterprise-scale, AI-powered governance platform that becomes the single source of truth for organizational data sensitivity, enabling compliance, policy enforcement, and risk mitigation across all business verticals. 
+
+10.2 Phased Implementation Roadmap 
+
+Phase 1: Foundation (Months 1-3) 
+
+Data collection & labeling (80K documents, dual-approval) 
+
+Baseline model training (Logistic Regression, XGBoost) 
+
+REST API development (FastAPI) 
+
+Hypothesis testing & validation 
+
+Phase 2: Advanced Models (Months 4-6) 
+
+Fine-tune BERT/RoBERTa/DeBERTa on domain corpus 
+
+Implement ensemble stacking & voting 
+
+Deploy SHAP/LIME explainability 
+
+Achieve ≥95% precision, ≥97% recall targets 
+
+Phase 3: Production & Integration (Months 7-9) 
+
+Deploy to production (Kubernetes) 
+
+Integrate with DLP/CASB/data catalog via webhooks 
+
+Implement mTLS for payments clients 
+
+Audit trail & compliance reporting 
+
+On-premise deployment option for air-gapped clients 
+
+Phase 4: MLOps & Continuous Improvement (Months 10-12) 
+
+MLflow experiment tracking & model registry 
+
+Drift monitoring via Evidently AI 
+
+Active learning pipeline for new data types 
+
+Monthly retraining cadence 
+
+Champion/challenger model selection 
+
+ 
+
+11. Constraints & Risk Mitigation 
+
+Constraint ID 
+
+Constraint Description 
+
+Mitigation Strategy 
+
+C1: PII Handling 
+
+No raw PII may be stored post-classification. Masking mandatory before persistence. 
+
+Implement Presidio library for PII detection & masking pre-storage. Verify via randomized audits. 
+
+C2: Auditability 
+
+Model must be auditable; black-box-only models unacceptable for regulated data. 
+
+Deploy ensemble combining interpretable models (Logistic Regression, XGBoost) with transformer explanations (SHAP/LIME). 
+
+C3: Deployment 
+
+Support on-premise deployment for air-gapped client environments. 
+
+Package model as containerized service (Docker). Provide offline setup guide & dependency bundle. 
+
+C4: Labeling 
+
+Training data labeling requires dual-approval from Legal & Data Governance. 
+
+Implement labeling workflow with approval gates. Track approver identity & timestamp. Audit disagreements. 
+
+C5: Payments 
+
+Inference API must support mTLS for all payments client integrations (Discover, Visa, Amex). 
+
+Implement mTLS endpoint. Issue client certs per vendor. Validate cert in API gateway. 
+
+ 
+
+11.2 Key Risks & Mitigation 
+
+Risk 
+
+Impact 
+
+Mitigation 
+
+Class Imbalance 
+
+Restricted samples rare in real data. Model overfits to majority class. Recall degrades. 
+
+Oversample Restricted class. Use SMOTE synthetic augmentation. Weighted loss function (higher weight for rare class). 
+
+Adversarial Inputs 
+
+Malicious users deliberately obfuscate PII (e.g., 'S.S.N: 123-45-6789'). Model misses. 
+
+Adversarial training with obfuscated examples. Combine model + regex rules. Complement with human-in-loop. 
+
+Model Staleness 
+
+New data types not in training. Model performance drifts over time. 
+
+Active learning pipeline. Monthly retraining. Drift monitoring via Evidently AI. Trigger retraining if F1 drops >3%. 
+
+Misclassification 
+
+Restricted data misclassified as Confidential/Internal. Regulatory liability & breach risk. 
+
+Mandatory human-in-loop for low-confidence predictions. Override mechanism for rule-detected PII. Audit all overrides. 
+
+ 
+
+12. Implementation & Next Steps 
+
+12.1 Immediate Actions (Week 1-2) 
+
+Secure executive sponsorship & budget approval 
+
+Establish cross-functional steering committee (Data Governance, Legal, Engineering, Security) 
+
+Define data access & labeling process with Legal/Privacy 
+
+Engage Discover, Visa, Amex for requirements validation 
+
+12.2 Success Metrics 
+
+Technical: Precision ≥0.95 (Restricted), Recall ≥0.97, F1-Macro ≥0.88, Latency <200ms p95 
+
+Operational: Human override rate <5%, Classification of 100K+ documents/month 
+
+Compliance: Zero audit gaps, Vendor prerequisite satisfaction, Drift alert SLA <48h 
+
+Business: Reduction in manual classification time by 95%, Elimination of compliance fines, Vendor relationship strengthening 
+
+12.3 Resource Requirements 
+
+Team: 1 ML Engineer, 1 Data Engineer, 1 Backend Engineer, 1 Data Scientist, 1 DevOps Engineer 
+
+Timeline: 12 months to production 
+
+Budget: ~$500K (infrastructure, tools, training, legal review) 
+
+Infrastructure: GPU-enabled training cluster, Kubernetes for production 
+
+12.4 Stakeholder Engagement 
+
+Data Governance: Own compliance validation, dual-approval labeling 
+
+Legal: Review sensitivity taxonomy, approve labeling process, vendor coordination 
+
+Security: Validate PII masking, audit mTLS setup 
+
+Payments Clients: Feedback on vendor prerequisites, reference architecture 
+
+ 
+
+Conclusion 
+
+The Automated Data Sensitivity Classification Engine represents a critical organizational investment in compliance, risk mitigation, and governance scalability. This design thinking documentary articulates a human-centered, evidence-based methodology that balances technical excellence with regulatory rigor. 
+
+By progressing through empathy mapping, problem definition, ideation, prototyping, and data-driven validation, we ensure the solution deeply addresses stakeholder needs while maintaining the transparency and auditability required in regulated financial services environments. The phased roadmap and risk mitigation strategies position the organization to deliver measurable value within 12 months, transforming data governance from a manual bottleneck into a strategic competitive advantage. 
+
+Next Steps: Secure stakeholder alignment on Phase 1 deliverables, initiate data collection & labeling workflow, establish MLOps infrastructure. 
